@@ -50,6 +50,9 @@ gem 'grape'
 # User Authorize
 gem 'cancan'
 
+# User Authentication
+gem 'devise'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'
