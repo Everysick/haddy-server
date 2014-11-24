@@ -53,6 +53,9 @@ gem 'cancan'
 # User Authentication
 gem 'devise'
 
+# Grape require
+gem 'hashie_rails'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'

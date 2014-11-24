@@ -12,7 +12,15 @@ module Register
         error!('401 Unauthorized', 401) unless current_user
       end
     end
-
     
+    resource 'register' do
+      get :init_token do
+
+      end
+
+      get :auth_token do
+
+      end
+    end    
   end
 end
