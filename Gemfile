@@ -47,6 +47,9 @@ gem 'slim-rails'
 # API Support
 gem 'grape'
 
+# User Authorize
+gem 'cancan'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'
