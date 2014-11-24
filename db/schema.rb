@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124170710) do
+ActiveRecord::Schema.define(version: 20141124182015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_auth_tokens", force: true do |t|
+    t.string   "token",        null: false
+    t.string   "token_secret", null: false
+    t.integer  "user_id",      null: false
+    t.string   "service"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_posts", force: true do |t|
+    t.string   "item_url",                     null: false
+    t.binary   "picture"
+    t.integer  "user_id",                      null: false
+    t.boolean  "already_post", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
