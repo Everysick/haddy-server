@@ -44,6 +44,9 @@ gem 'spring',        group: :development
 # html template using slim
 gem 'slim-rails'
 
+# API Support
+gem 'grape'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'
