@@ -56,6 +56,9 @@ gem 'devise'
 # Grape require
 gem 'hashie_rails'
 
+# pry on rails
+gem 'pry-rails'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'

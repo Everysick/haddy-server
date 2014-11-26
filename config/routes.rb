@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   get 'home/index'
   root 'home#index'
   
-  mount Register::API => '/'
+  mount API::API => '/'
 end
