@@ -1,11 +1,13 @@
 require 'twitter'
 
 class Tweetpost
-  def build(token, secret, tweets)
-    binding.pry
+  def build(token, secret, tweets, image='no_image')
     client = get_twitter_client(token, secret)
-    binding.pry
-    update(client, tweets)
+     if image.eql?('no_image')
+       update(client, tweets)
+     else
+       update(client, tweets, image)
+     end
   end
 
   private
@@ -23,6 +25,15 @@ class Tweetpost
     begin
       tweet = (tweet.length > 140) ? tweet[0..139].to_s : tweet
       client.update(tweet.chomp)
+    rescue => e
+      Rails.logger.error "<<twitter.rake::tweet.update ERROR : #{e.message}>>"
+    end
+  end
+
+  def update(client, tweet, image)
+    begin
+      tweet = (tweet.length > 140) ? tweet[0..139].to_s : tweet
+      client.update_with_media(tweet.chomp, image)
     rescue => e
       Rails.logger.error "<<twitter.rake::tweet.update ERROR : #{e.message}>>"
     end

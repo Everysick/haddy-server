@@ -1,4 +1,5 @@
 require 'tweetpost'
+require 'associater'
 
 module API
   class API < Grape::API
@@ -27,7 +28,7 @@ module API
       end
 
       post :token do
-        
+         error!('404 Not Found', 404)
       end
     end
 
@@ -35,6 +36,9 @@ module API
       params do
         requires :auth_token, type: String
         requires :user_id, type: Integer
+        requires :amazon_url, type: String
+        requires :image
+        requires :message, type: String
       end
       post :upload do
         begin
@@ -42,8 +46,22 @@ module API
           error!('401 Unauthorized', 401) unless user.authenticate!(params[:auth_token])
           token =  UserAuthToken.where(user_id: user.id).first
           fail if token.blank?
-          binding.pry
-          Tweetpost.new.build(token.token, token.token_secret, "hoge fuga")
+
+          read_image_data = params[:image].tempfile
+          path = "#{Rails.root}/tmp/#{user.name}.jpg"
+          image_file = File.open(path, 'w+b')
+          image_file.write(read_image_data.read)
+          image_file.close
+          
+          associate = Associate.where(user_id: user.id).first
+          url = Associater.new.build(params[:amazon_url], associate.token)
+
+          Tweetpost.new.build(
+            token.token,
+            token.token_secret,
+            params[:message] + ' ' + url,
+            File.open(path, 'r+b')
+          )
           status 200
         rescue
           error!('400 Bad Request', 400)
@@ -62,7 +80,7 @@ module API
           user = User.find_by_id(params[:user_id])
           error!('401 Unauthorized', 401) unless user.authenticate!(params[:auth_token])
           associate = Associate.where(user_id: user.id).first
-          fail if associate.blank?
+          fail if associate.present?
           associate = Associate.new
           associate.create_associate(params[:associate_id], user)
           status 200

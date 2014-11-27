@@ -65,6 +65,9 @@ gem 'twitter'
 # amazon associate URL gen
 gem 'amazon-ecs'
 
+# get goo.gl short url
+gem 'googl'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'

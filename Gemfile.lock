@@ -64,6 +64,9 @@ GEM
     execjs (2.2.2)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    googl (0.6.3)
+      httparty (~> 0.10.0)
+      json (>= 1.4.6)
     grape (0.9.0)
       activesupport
       builder
@@ -82,6 +85,9 @@ GEM
     http (0.6.3)
       http_parser.rb (~> 0.6.0)
     http_parser.rb (0.6.0)
+    httparty (0.10.2)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     ice_nine (0.11.0)
     jbuilder (2.2.4)
@@ -213,6 +219,7 @@ DEPENDENCIES
   cancan
   coffee-rails (~> 4.0.0)
   devise
+  googl
   grape
   hashie_rails
   jbuilder (~> 2.0)
