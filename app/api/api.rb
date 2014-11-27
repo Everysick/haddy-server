@@ -1,3 +1,5 @@
+require 'tweetpost'
+
 module API
   class API < Grape::API
     version 'v1', using: :path, vendor: 'api'
@@ -38,6 +40,10 @@ module API
         begin
           user = User.find_by_id(params[:user_id])
           error!('401 Unauthorized', 401) unless user.authenticate!(params[:auth_token])
+          token =  UserAuthToken.where(user_id: user.id).first
+          fail if token.blank?
+          binding.pry
+          Tweetpost.new.build(token.token, token.token_secret, "hoge fuga")
           status 200
         rescue
           error!('400 Bad Request', 400)

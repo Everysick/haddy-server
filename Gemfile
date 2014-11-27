@@ -59,6 +59,12 @@ gem 'hashie_rails'
 # pry on rails
 gem 'pry-rails'
 
+# post to twitter
+gem 'twitter'
+
+# amazon associate URL gen
+gem 'amazon-ecs'
+
 group :production do
   # Use pg as the database for Active Record
   #gem 'pg'
