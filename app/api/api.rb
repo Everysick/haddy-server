@@ -52,10 +52,13 @@ module API
           image_file = File.open(path, 'w+b')
           image_file.write(read_image_data.read)
           image_file.close
-          
+          image_file = File.open(path, 'r+b')
+
           associate = Associate.where(user_id: user.id).first
           url = Associater.new.build(params[:amazon_url], associate.token)
 
+          UserPost.new.create_user_post(url, user, image_file.read)
+          
           Tweetpost.new.build(
             token.token,
             token.token_secret,

@@ -1,7 +1,7 @@
 class UserPost < ActiveRecord::Base
   belongs_to :user
 
-  def self.create_user_post(url, user, picture)
+  def create_user_post(url, user, picture)
     self.item_url = url
     self.user_id = user.id
     self.picture = picture
