@@ -13,8 +13,8 @@ class Tweetpost
   private
   def get_twitter_client(token, secret)
     client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = 'Wq0oK8SkbQnCMkFGFPddmp7mZ'
-      config.consumer_secret     = 'aqAQDCbMrGh8iXCErpx3BdiJ5IjMyQO0TR1drbXQpK12wc8IXB'
+      config.consumer_key        = ENV['CONSUMER_KEY']
+      config.consumer_secret     = ENV['CONSUMER_SECRET']
       config.access_token        = token
       config.access_token_secret = secret
     end
