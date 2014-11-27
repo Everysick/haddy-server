@@ -28,7 +28,7 @@ module API
       end
 
       post :token do
-         error!('404 Not Found', 404)
+        error!('404 Not Found', 404)
       end
     end
 
@@ -55,7 +55,11 @@ module API
           image_file = File.open(path, 'r+b')
 
           associate = Associate.where(user_id: user.id).first
-          url = Associater.new.build(params[:amazon_url], associate.token)
+          if associate.present?
+            url = Associater.new.build(params[:amazon_url], associate.token)
+          else
+            url = Associater.new.build(params[:amazon_url])
+          end
 
           UserPost.new.create_user_post(url, user, image_file.read)
           
@@ -83,8 +87,9 @@ module API
           user = User.find_by_id(params[:user_id])
           error!('401 Unauthorized', 401) unless user.authenticate!(params[:auth_token])
           associate = Associate.where(user_id: user.id).first
-          fail if associate.present?
-          associate = Associate.new
+          if associate.blank?
+            associate = Associate.new
+          end
           associate.create_associate(params[:associate_id], user)
           status 200
         rescue
