@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   has_many :user_post
   has_many :user_auth_token
+  has_many :associate
   
   ROLE = ['user', 'admin', 'unauthenticated_user']
 

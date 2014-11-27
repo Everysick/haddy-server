@@ -36,11 +36,32 @@ module API
       end
       post :upload do
         begin
-          user = User.find(params[:user_id])
-          fail '401' unless user.authenticate!(params[:auth_token])
+          user = User.find_by_id(params[:user_id])
+          error!('401 Unauthorized', 401) unless user.authenticate!(params[:auth_token])
           status 200
         rescue
-          error!('401 Unauthorized', 401)
+          error!('400 Bad Request', 400)
+        end
+      end
+    end
+
+    resource :amazon do
+      params do
+        requires :auth_token, type: String
+        requires :user_id, type: Integer
+        requires :associate_id, type: String
+      end
+      post :enable do
+        begin
+          user = User.find_by_id(params[:user_id])
+          error!('401 Unauthorized', 401) unless user.authenticate!(params[:auth_token])
+          associate = Associate.where(user_id: user.id).first
+          fail if associate.blank?
+          associate = Associate.new
+          associate.create_associate(params[:associate_id], user)
+          status 200
+        rescue
+          error!('400 Bad Request', 400)
         end
       end
     end
