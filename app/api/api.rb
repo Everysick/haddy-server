@@ -66,7 +66,7 @@ module API
           Tweetpost.new.build(
             token.token,
             token.token_secret,
-            params[:message] + ' ' + url,
+            params[:message] + ' ' + url + ' #haddyapp',
             File.open(path, 'r+b')
           )
           status 200
